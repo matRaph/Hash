@@ -27,17 +27,44 @@ namespace Hash
         }
 
         public int Size{ get; set; }
-        public Element[] Elements{ get; set; }
+        public Element?[] Elements{ get; set; }
         public Hash(int size)
         {
             this.Size = size;
             this.Elements = new Element[size];
         }
 
-        public int HashFunc(object key)
+        private int HashFunc(object key)
         {
             return (this.Size % key.GetHashCode());
         }
 
+        public object FindElement(object Key)
+        {
+            int index = HashFunc(Key);
+            int count = 0;
+
+            //Percorre o array de forma circular
+            while (count != this.Size)
+            {
+                Element cell = Elements[index];
+                //Se encontrar uma célula vazia
+                if (cell == null)
+                {
+                    throw new NO_SUCH_KEY_EXCEPTION("Chave não encontrada");
+                }
+                //Se encontrar a chave retorna o elemento
+                else if (cell.Key.Equals(Key))
+                {
+                    return cell.Value;
+                }
+                //Se encontrar o fim do array, retorna para começo dele
+                else if (count == this.Size - 1) index = 0;
+
+                index++;
+                count++;
+            }
+            throw new NO_SUCH_KEY_EXCEPTION("Chave não encontrada");
+        }
     }
 }
