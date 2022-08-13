@@ -8,9 +8,6 @@ namespace Hash
 {
     internal class NO_SUCH_KEY_EXCEPTION : Exception
     {
-        public NO_SUCH_KEY_EXCEPTION(string message) : base(message)    
-        {
-            Console.WriteLine(message);
-        }
+        public NO_SUCH_KEY_EXCEPTION(string message) : base(message) { }
     }
 }
